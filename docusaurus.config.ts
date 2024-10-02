@@ -39,7 +39,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: process.env.GITHUB_CODE_URL,
+          editUrl: process.env.GITHUB_DOCS_URL,
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -94,7 +94,7 @@ const config: Config = {
           label: 'Tutorial',
         },
         {
-          href: 'https://github.com/TamakiControl/tamaki-mes',
+          href: process.env.GITHUB_CODE_URL,
           label: 'GitHub',
           position: 'right',
         },
@@ -117,16 +117,8 @@ const config: Config = {
           items: [
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/tamaki-mes',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/tamaki-mes',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/tamaki-mes',
-            },
+              href: process.env.STACK_OVERFLOW_URL,
+            }
           ],
         },
         {
@@ -134,7 +126,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/TamakiControl/tamaki-mes',
+              href: process.env.GITHUB_CODE_URL,
             },
           ],
         },
