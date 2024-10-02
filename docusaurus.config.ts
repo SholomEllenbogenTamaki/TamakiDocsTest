@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import 'dotenv/config'
 
 const config: Config = {
   title: 'Tamaki MES',
@@ -9,10 +10,10 @@ const config: Config = {
   // themes: ['@docusaurus/theme-search-algolia'],
 
   // Set the production url of your site here
-  url: 'https://sholomellenbogentamaki.github.io',
+  url: process.env.URL,
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/TamakiDocsTest/',
+  baseUrl: process.env.BASE_URL,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -38,8 +39,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: process.env.GITHUB_CODE_URL,
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -51,12 +51,12 @@ const config: Config = {
   themeConfig: {
     algolia: {
       // The application ID provided by Algolia
-      appId: 'RYCE6WHWFX',
+      appId: process.env.APPLICATION_ID,
 
       // Public API key: it is safe to commit it
-      apiKey: '4b0a375d1dc57ad645d62f4d938b7402',
+      apiKey: process.env.API_KEY,
 
-      indexName: 'dev_TAMAKI_MES',
+      indexName: process.env.INDEX_NAME,
 
       // Optional: see doc section below
       contextualSearch: true,
