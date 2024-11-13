@@ -1,5 +1,3 @@
-name: Close Issues on PR merges that reference the issue number in the PR body
-
 on:
   pull_request:
     branches: [ master, main, staging, dev ]
@@ -10,8 +8,25 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Close linked issues
-        uses: peter-evans/close-issue@v2
-        with:
-          issue-number: ${{ github.event.pull_request.body }}
-          comment: "This issue has been closed due to the merging of [PR #${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})."
+      - name: Extract Issue Numbers from PR Description
+        id: extract_issues
+        run: |
+          # Extract issue numbers from PR description (e.g., "Fixes #123" or "Closes #123")
+          issues=$(echo "${{ github.event.pull_request.body }}" | grep -oE '#[0-9]+' | tr -d '#')
+          echo "issues=$issues" >> $GITHUB_ENV
+
+      - name: Close Issues and Add Comments
+        if: env.issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr_number=${{ github.event.pull_request.number }}
+          pr_url=${{ github.event.pull_request.html_url }}
+          comment="This issue has been closed due to the merging of [PR #$pr_number]($pr_url)."
+          
+          for issue in $issues; do
+            # Close the issue
+            gh issue close $issue -R ${{ github.repository }}
+            # Add a comment with PR number and link
+            gh issue comment $issue -R ${{ github.repository }} -b "$comment"
+          done
