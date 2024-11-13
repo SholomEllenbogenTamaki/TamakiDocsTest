@@ -8,11 +8,6 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Set up GitHub CLI
-        uses: actions/setup-gh@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Extract Issue Numbers from PR Description
         id: extract_issues
         run: |
@@ -22,6 +17,8 @@ jobs:
 
       - name: Close Issues and Add Comments
         if: env.issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pr_number=${{ github.event.pull_request.number }}
           pr_url=${{ github.event.pull_request.html_url }}
