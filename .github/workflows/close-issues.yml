@@ -11,7 +11,6 @@ jobs:
       - name: Extract Issue Numbers from PR Description
         id: extract_issues
         run: |
-          # Extract issue numbers from PR description (e.g., "Fixes #123" or "Closes #123")
           issues=$(echo "${{ github.event.pull_request.body }}" | grep -oE '#[0-9]+' | tr -d '#')
           echo "issues=$issues" >> $GITHUB_ENV
 
@@ -22,11 +21,7 @@ jobs:
         run: |
           pr_number=${{ github.event.pull_request.number }}
           pr_url=${{ github.event.pull_request.html_url }}
-          comment="This issue has been closed due to the merging of [PR #$pr_number]($pr_url)."
           
           for issue in $issues; do
-            # Close the issue
-            gh issue close $issue -R ${{ github.repository }}
-            # Add a comment with PR number and link
-            gh issue comment $issue -R ${{ github.repository }} -b "$comment"
+            gh issue close $issue -R ${{ github.repository }} --reason "This issue has been closed due to the merging of [PR #$pr_number]($pr_url)."
           done
