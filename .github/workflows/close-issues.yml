@@ -1,16 +1,17 @@
-name: Close Issues on Merge into Dev Branch
+name: Close Issues on PR merges that reference the issue number in the PR body
 
 on:
   pull_request:
+    branches: [ master, main, staging, dev ]
     types: [closed]
 
 jobs:
   close-issues:
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'dev'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Close linked issues
         uses: peter-evans/close-issue@v2
         with:
           issue-number: ${{ github.event.pull_request.body }}
-          comment: "This issue has been closed due to a merge into the dev branch."
+          comment: "This issue has been closed due to the merging of [PR #${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})."
