@@ -23,5 +23,5 @@ jobs:
           pr_url=${{ github.event.pull_request.html_url }}
           
           for issue in $issues; do
-            gh issue close $issue -R ${{ github.repository }} --reason "This issue has been closed due to the merging of [PR #$pr_number]($pr_url)."
+            gh issue close $issue -R ${{ github.repository }} -r "completed" -c "This issue has been closed due to the merging of [PR #$pr_number]($pr_url)."
           done
