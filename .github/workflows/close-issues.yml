@@ -15,4 +15,4 @@ jobs:
         uses: peter-evans/close-issue@v3.0.1
         with:
           issue-number: ${{ github.event.pull_request.body }}
-          comment: "This issue has been closed due to the merging of [PR #${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})."
+          comment: "This issue has been closed due to the merging of PR #${{ github.event.pull_request.number }}."
